@@ -1,0 +1,85 @@
+:root {
+    --background-color: #f8f9fa;
+    --text-color: #212529;
+    --button-bg-color: #6c757d;
+    --button-hover-bg-color: #5a6268;
+    --submit-button-bg-color: #198754;
+    --submit-button-hover-bg-color: #157347;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    color: #198754; /* green */
+}
+
+#add-form,
+#edit-form,
+.recipe {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+}
+
+.recipe {
+    margin-bottom: 10px;
+}
+
+.recipe h3 {
+    margin-top: 0;
+    color: #198754; /* green */
+}
+
+.recipe p {
+    margin: 10px 0;
+}
+
+input[type="text"],
+textarea,
+input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da; /* light gray */
+    border-radius: var(--border-radius);
+}
+
+button,
+input[type="submit"] {
+    background: var(--button-bg-color);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: var(--border-radius);
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+input[type="submit"] {
+    background-color: var(--submit-button-bg-color);
+}
+
+input[type="submit"]:hover {
+    background-color: var(--submit-button-hover-bg-color);
+}

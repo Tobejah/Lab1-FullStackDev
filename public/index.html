@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Book</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <h1>Recipe Book</h1>
+
+    <!-- Form for adding a new recipe -->
+    <form id="add-form">
+        <input type="text" id="add-title" placeholder="Title">
+        <input type="text" id="add-ingredients" placeholder="Ingredients (comma-separated)">
+        <textarea id="add-instructions" placeholder="Instructions"></textarea>
+        <input type="number" id="add-cookingTime" placeholder="Cooking Time (in minutes)">
+        <button type="submit">Add Recipe</button>
+    </form>
+
+    <!-- Container for displaying the list of recipes -->
+    <div id="recipe-list"></div>
+
+    <!-- Edit form, can be initially hidden and shown when needed -->
+    <form id="edit-form" style="display:none;">
+        <input type="hidden" id="edit-id">
+        <input type="text" id="edit-title" placeholder="Title">
+        <input type="text" id="edit-ingredients" placeholder="Ingredients (comma-separated)">
+        <textarea id="edit-instructions" placeholder="Instructions"></textarea>
+        <input type="number" id="edit-cookingTime" placeholder="Cooking Time (in minutes)">
+        <button type="submit">Update Recipe</button>
+    </form>
+
+    <!-- Include your JavaScript file -->
+    <script src="app.js"></script>
+</body>
+</html>
