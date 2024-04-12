@@ -13,40 +13,36 @@ const displayRecipes = (recipes) => {
     recipeList.innerHTML = ''; // Clear existing recipes
 
     recipes.forEach(recipe => {
-        const recipeElement = createRecipeElement(recipe);
+        const recipeElement = document.createElement('div');
+        recipeElement.innerHTML = `
+            <h3>${escapeHtml(recipe.title)}</h3>
+            <p><strong>Ingredients:</strong> ${recipe.ingredients ? escapeHtml(recipe.ingredients.join(', ')) : 'No ingredients listed'}</p>
+            <p><strong>Instructions:</strong> ${recipe.instructions ? escapeHtml(recipe.instructions) : 'No instructions provided'}</p>
+            <p><strong>Cooking Time:</strong> ${recipe.cookingTime || 'Not specified'} minutes</p>
+            <button onclick="deleteRecipe('${recipe._id}')">Delete</button>
+            <button onclick="editRecipeForm('${recipe._id}', '${escapeHtml(recipe.title)}', '${escapeHtml(recipe.ingredients.join(','))}', '${escapeHtml(recipe.instructions)}', ${recipe.cookingTime})">Edit</button>
+        `;
         recipeList.appendChild(recipeElement);
     });
 };
 
-const createRecipeElement = (recipe) => {
-    const { title, ingredients, instructions, cookingTime, _id } = recipe;
-    const recipeElement = document.createElement('div');
-    recipeElement.innerHTML = `
-        <h3>${escapeHtml(title)}</h3>
-        <p><strong>Ingredients:</strong> ${ingredients ? escapeHtml(ingredients.join(', ')) : 'No ingredients listed'}</p>
-        <p><strong>Instructions:</strong> ${instructions ? escapeHtml(instructions) : 'No instructions provided'}</p>
-        <p><strong>Cooking Time:</strong> ${cookingTime || 'Not specified'} minutes</p>
-        <button onclick="deleteRecipe('${_id}')">Delete</button>
-        <button onclick="editRecipeForm('${_id}', '${escapeHtml(title)}', '${escapeHtml(ingredients.join(','))}', '${escapeHtml(instructions)}', ${cookingTime})">Edit</button>
-    `;
-    return recipeElement;
-};
-
 const editRecipeForm = (id, title, ingredients, instructions, cookingTime) => {
-    const fields = ['title', 'ingredients', 'instructions', 'cookingTime'];
-    fields.forEach(field => {
-        document.getElementById(`edit-${field}`).value = field === 'ingredients' ? ingredients : recipe[field];
-    });
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-title').value = title;
+    document.getElementById('edit-ingredients').value = ingredients;
+    document.getElementById('edit-instructions').value = instructions;
+    document.getElementById('edit-cookingTime').value = cookingTime;
 
     document.getElementById('edit-form').style.display = 'block'; // Show the form
 };
 
 const editRecipe = async (id) => {
-    const fields = ['title', 'ingredients', 'instructions', 'cookingTime'];
-    const updatedRecipe = {};
-    fields.forEach(field => {
-        updatedRecipe[field] = document.getElementById(`edit-${field}`).value;
-    });
+    const updatedRecipe = {
+        title: document.getElementById('edit-title').value,
+        ingredients: document.getElementById('edit-ingredients').value.split(',').map(ingredient => ingredient.trim()),
+        instructions: document.getElementById('edit-instructions').value,
+        cookingTime: parseInt(document.getElementById('edit-cookingTime').value, 10),
+    };
 
     try {
         const response = await fetch(`/api/recipes/${id}`, {
@@ -85,16 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addForm) {
         addForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const newRecipe = {};
-            const fields = ['title', 'ingredients', 'instructions', 'cookingTime'];
-            fields.forEach(field => {
-                newRecipe[field] = document.getElementById(`add-${field}`).value;
-                if (field === 'ingredients') {
-                    newRecipe[field] = newRecipe[field].split(',').map(ingredient => ingredient.trim());
-                } else if (field === 'cookingTime') {
-                    newRecipe[field] = parseInt(newRecipe[field], 10);
-                }
-            });
+            const newRecipe = {
+                title: document.getElementById('add-title').value,
+                ingredients: document.getElementById('add-ingredients').value.split(',').map(ingredient => ingredient.trim()),
+                instructions: document.getElementById('add-instructions').value,
+                cookingTime: parseInt(document.getElementById('add-cookingTime').value, 10),
+            };
 
             try {
                 const response = await fetch('/api/recipes', {
